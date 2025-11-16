@@ -1,0 +1,77 @@
+---
+import SeoHead from '../components/layout/SeoHead.astro';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title = "FavIcon Forge - Online Favicon Generator",
+  description = "Generate professional favicons for your website in seconds. Upload PNG, SVG, JPG and get all sizes needed. No backend, works offline, completely free.",
+  url,
+  image,
+  noIndex = false
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <SeoHead 
+      title={title}
+      description={description}
+      url={url}
+      image={image}
+      noIndex={noIndex}
+    />
+    <style>
+      /* Custom slider styles for cross-browser compatibility */
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #3b82f6;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #3b82f6;
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+      }
+      
+      /* Color input styling */
+      input[type="color"] {
+        -webkit-appearance: none;
+        border: none;
+        cursor: pointer;
+      }
+      
+      input[type="color"]::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+      
+      input[type="color"]::-webkit-color-swatch {
+        border: none;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-50 font-sans antialiased">
+    <slot />
+  </body>
+</html>

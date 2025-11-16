@@ -1,0 +1,146 @@
+---
+import Container from '../ui/Container.astro';
+---
+
+<section id="faq" class="py-20 bg-white">
+  <Container>
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Frequently Asked Questions
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Common questions about favicon generation and website implementation.
+      </p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto space-y-4">
+      <!-- FAQ 1 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          What favicon sizes are included in the download?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            The generated ZIP file contains all essential favicon sizes for modern web browsers:
+          </p>
+          <ul class="list-disc list-inside space-y-2 mb-4">
+            <li><strong>favicon-16x16.png</strong> - Standard small favicon</li>
+            <li><strong>favicon-32x32.png</strong> - Standard medium favicon</li>
+            <li><strong>favicon-48x48.png</strong> - High-DPI small favicon</li>
+            <li><strong>apple-touch-icon.png</strong> (180×180) - iOS home screen icon</li>
+            <li><strong>android-chrome-192x192.png</strong> - Android Chrome icon</li>
+            <li><strong>android-chrome-512x512.png</strong> - Large Android icon</li>
+            <li><strong>favicon.ico</strong> - Legacy favicon for older browsers</li>
+          </ul>
+          <p>
+            Plus a <strong>head-snippet.html</strong> file with the exact code to paste into your website's &lt;head&gt; section.
+          </p>
+        </div>
+      </details>
+      
+      <!-- FAQ 2 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          Do you upload my images to a server?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            <strong>No, absolutely not!</strong> FavIcon Forge works entirely in your browser using modern web technologies.
+          </p>
+          <ul class="list-disc list-inside space-y-2">
+            <li>Your images never leave your device</li>
+            <li>No data is sent to our servers</li>
+            <li>No tracking, no analytics, no cookies</li>
+            <li>Works completely offline after the first page load</li>
+            <li>Your privacy is 100% protected</li>
+          </ul>
+        </div>
+      </details>
+      
+      <!-- FAQ 3 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          How do I use the favicon files on my website?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            After downloading the ZIP file, follow these simple steps:
+          </p>
+          <ol class="list-decimal list-inside space-y-3 mb-4">
+            <li><strong>Extract</strong> all PNG files to your website's root directory (same folder as index.html)</li>
+            <li><strong>Copy</strong> the HTML code from <code class="bg-gray-200 px-2 py-1 rounded">head-snippet.html</code></li>
+            <li><strong>Paste</strong> the code inside the <code class="bg-gray-200 px-2 py-1 rounded">&lt;head&gt;</code> section of your HTML</li>
+            <li><strong>Upload</strong> everything to your web server</li>
+          </ol>
+          <p>
+            The favicon will appear in browser tabs, bookmarks, and mobile home screens within a few hours.
+          </p>
+        </div>
+      </details>
+      
+      <!-- FAQ 4 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          Does it work with SVG logos?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            <strong>Yes!</strong> FavIcon Forge fully supports SVG files and they often produce the best results.
+          </p>
+          <ul class="list-disc list-inside space-y-2 mb-4">
+            <li>SVG files are vector-based, so they scale perfectly to any size</li>
+            <li>Text and shapes remain crisp at all favicon sizes</li>
+            <li>Complex SVGs are automatically converted to high-quality PNG files</li>
+            <li>Colors, gradients, and transparency are preserved</li>
+          </ul>
+          <p>
+            <strong>Tip:</strong> For best results, use SVGs with simple designs and avoid very thin lines that might disappear at 16×16 pixels.
+          </p>
+        </div>
+      </details>
+      
+      <!-- FAQ 5 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          What file formats can I upload?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            FavIcon Forge accepts all major image formats:
+          </p>
+          <ul class="list-disc list-inside space-y-2 mb-4">
+            <li><strong>PNG</strong> - Best for logos with transparency</li>
+            <li><strong>SVG</strong> - Best for vector graphics and text</li>
+            <li><strong>JPG/JPEG</strong> - Good for photographic images</li>
+            <li><strong>WebP</strong> - Modern format with excellent compression</li>
+          </ul>
+          <p>
+            Maximum file size is <strong>10MB</strong>. For best results, use square images (same width and height) or the tool will automatically add padding.
+          </p>
+        </div>
+      </details>
+      
+      <!-- FAQ 6 -->
+      <details class="bg-gray-50 rounded-lg">
+        <summary class="cursor-pointer p-6 font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors">
+          Why isn't my favicon showing up immediately?
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p class="mb-4">
+            Favicon updates can take time due to browser caching. Here's what to try:
+          </p>
+          <ul class="list-disc list-inside space-y-2 mb-4">
+            <li><strong>Clear your browser cache</strong> (Ctrl+F5 or Cmd+Shift+R)</li>
+            <li><strong>Wait 24-48 hours</strong> for full propagation</li>
+            <li><strong>Check in incognito/private mode</strong> to bypass cache</li>
+            <li><strong>Verify file placement</strong> - all PNGs should be in your website root</li>
+            <li><strong>Check HTML syntax</strong> - ensure the head snippet was pasted correctly</li>
+          </ul>
+          <p>
+            <strong>Pro tip:</strong> Add a version parameter like <code class="bg-gray-200 px-2 py-1 rounded">favicon.ico?v=2</code> to force browsers to reload the favicon.
+          </p>
+        </div>
+      </details>
+    </div>
+  </Container>
+</section>

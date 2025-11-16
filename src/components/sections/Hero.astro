@@ -1,0 +1,62 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
+  <Container>
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        Online Favicon Generator
+        <span class="text-blue-600">– from PNG/SVG to favicon in seconds</span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+        Create professional favicons for your website instantly. Upload your logo as 
+        <strong>PNG, SVG, JPG or WebP</strong> and get all the sizes you need. 
+        No backend, works offline, completely free.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Button 
+          variant="primary" 
+          size="lg" 
+          onClick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})"
+        >
+          Start Generating Favicons
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </Button>
+        
+        <div class="flex items-center space-x-2 text-gray-600">
+          <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>No upload to servers</span>
+          
+          <svg class="w-5 h-5 text-green-500 ml-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>Works offline</span>
+          
+          <svg class="w-5 h-5 text-green-500 ml-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>Always free</span>
+        </div>
+      </div>
+      
+      <div class="mt-12">
+        <p class="text-sm text-gray-500 mb-4">Generates all the sizes you need:</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {[16, 32, 48, 180, 192, 512].map(size => (
+            <span class="bg-white px-3 py-1 rounded-full text-sm font-medium text-gray-700 shadow-sm border">
+              {size}×{size}px
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Features from '../components/sections/Features.astro';
+import HowItWorks from '../components/sections/HowItWorks.astro';
+import ToolSection from '../components/sections/ToolSection.astro';
+import Faq from '../components/sections/Faq.astro';
+
+const seoData = {
+  title: "FavIcon Forge - Online Favicon Generator",
+  description: "Generate professional favicons for your website in seconds. Upload PNG, SVG, JPG and get all sizes needed. No backend, works offline, completely free.",
+  url: Astro.site?.toString(),
+};
+---
+
+<BaseLayout {...seoData}>
+  <Header />
+  
+  <main>
+    <Hero />
+    <Features />
+    <HowItWorks />
+    <ToolSection />
+    <Faq />
+  </main>
+  
+  <Footer />
+</BaseLayout>
