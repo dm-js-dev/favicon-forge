@@ -1,0 +1,25 @@
+---
+export interface Props {
+  variant?: 'header' | 'footer';
+  class?: string;
+}
+
+const { variant = 'header', class: className = '' } = Astro.props;
+
+const variantClasses = {
+  header: 'inline-flex items-center px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group',
+  footer: 'inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group'
+};
+
+const classes = `${variantClasses[variant]} ${className}`;
+---
+
+<a 
+  href="https://github.com/dm-js-dev/favicon-forge" 
+  target="_blank"
+  rel="noopener noreferrer"
+  class={classes}
+  aria-label="Star on GitHub"
+>
+  ⭐ Star me on GitHub
+</a>
