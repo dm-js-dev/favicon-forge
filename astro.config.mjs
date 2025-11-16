@@ -7,7 +7,8 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [react(), tailwind()],
   output: 'static',
-  site: 'https://favicon-forge.app',
+  site: 'https://dm-js-dev.github.io/favicon-forge/',
+  base: '/favicon-forge/',
   build: {
     inlineStylesheets: 'never',
   },
