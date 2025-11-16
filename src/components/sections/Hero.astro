@@ -3,15 +3,15 @@ import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 ---
 
-<section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
+<section class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-20">
   <Container>
     <div class="text-center max-w-4xl mx-auto">
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
         Online Favicon Generator
-        <span class="text-blue-600">– from PNG/SVG to favicon in seconds</span>
+        <span class="text-blue-600 dark:text-blue-400">– from PNG/SVG to favicon in seconds</span>
       </h1>
       
-      <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
         Create professional favicons for your website instantly. Upload your logo as 
         <strong>PNG, SVG, JPG or WebP</strong> and get all the sizes you need. 
         No backend, works offline, completely free.
@@ -29,7 +29,7 @@ import Button from '../ui/Button.astro';
           </svg>
         </Button>
         
-        <div class="flex items-center space-x-2 text-gray-600">
+        <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
           <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
           </svg>
@@ -48,10 +48,10 @@ import Button from '../ui/Button.astro';
       </div>
       
       <div class="mt-12">
-        <p class="text-sm text-gray-500 mb-4">Generates all the sizes you need:</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Generates all the sizes you need:</p>
         <div class="flex flex-wrap justify-center gap-3">
           {[16, 32, 48, 180, 192, 512].map(size => (
-            <span class="bg-white px-3 py-1 rounded-full text-sm font-medium text-gray-700 shadow-sm border">
+            <span class="bg-white dark:bg-gray-700 px-3 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-600">
               {size}×{size}px
             </span>
           ))}

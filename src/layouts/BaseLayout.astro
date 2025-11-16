@@ -28,6 +28,21 @@ const {
       image={image}
       noIndex={noIndex}
     />
+    <script is:inline>
+      // Предотвращение мерцания темы при загрузке
+      (function() {
+        const getSystemTheme = () => {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+        
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && getSystemTheme() === 'dark')) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
     <style>
       /* Custom slider styles for cross-browser compatibility */
       input[type="range"] {
@@ -71,7 +86,7 @@ const {
       }
     </style>
   </head>
-  <body class="min-h-screen bg-gray-50 font-sans antialiased">
+  <body class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans antialiased transition-colors">
     <slot />
   </body>
 </html>

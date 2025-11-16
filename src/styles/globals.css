@@ -21,34 +21,34 @@
   
   /* Button variants */
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus-ring;
+    @apply bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 focus-ring;
   }
   
   .btn-secondary {
-    @apply bg-gray-600 text-white hover:bg-gray-700 focus-ring;
+    @apply bg-gray-600 text-white hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 focus-ring;
   }
   
   .btn-outline {
-    @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus-ring;
+    @apply border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus-ring;
   }
   
   /* Card styles */
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200;
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700;
   }
   
   .card-elevated {
-    @apply bg-white rounded-xl shadow-lg;
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/25;
   }
   
   /* Input styles */
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500;
+    @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-400 dark:focus:border-primary-400;
   }
   
   /* Slider styles */
   .slider {
-    @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+    @apply w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer;
   }
   
   .slider::-webkit-slider-thumb {
