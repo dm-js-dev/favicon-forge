@@ -1,9 +1,12 @@
 import { zip } from 'fflate';
-import type { 
-  SourceImage, 
-  GeneratorConfig, 
-  FaviconSize, 
-  GeneratedIcon 
+import type {
+  SourceImage,
+  GeneratorConfig,
+  FaviconSize,
+  GeneratedIcon,
+  ImageModeConfig,
+  CustomModeConfig,
+  ImageCrop
 } from './types';
 import { buildHeadSnippet, getSnippetInstructions } from './snippet';
 
@@ -50,7 +53,7 @@ async function loadImage(source: SourceImage): Promise<HTMLImageElement | ImageB
  * Generate a single favicon icon
  */
 async function generateIcon(
-  image: HTMLImageElement | ImageBitmap,
+  image: HTMLImageElement | ImageBitmap | null,
   size: FaviconSize,
   config: GeneratorConfig
 ): Promise<GeneratedIcon> {
@@ -64,43 +67,107 @@ async function generateIcon(
   canvas.width = size;
   canvas.height = size;
 
-  // Calculate padding
-  const paddingPixels = Math.round(size * (config.paddingPercent / 100));
-  const contentSize = size - paddingPixels * 2;
-
-  // Draw background
-  ctx.fillStyle = config.backgroundColor;
-  ctx.fillRect(0, 0, size, size);
-
-  // Apply border radius if specified
+  // Apply border radius clip if specified (so background and content both clipped)
   if (config.radiusPercent > 0) {
     const radius = Math.round(size * (config.radiusPercent / 100));
-    
     ctx.save();
     ctx.beginPath();
-    ctx.roundRect(0, 0, size, size, radius);
+    if (ctx.roundRect) {
+      ctx.roundRect(0, 0, size, size, radius);
+    } else {
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+    }
     ctx.clip();
-    
-    // Redraw background within rounded rectangle
-    ctx.fillStyle = config.backgroundColor;
-    ctx.fillRect(0, 0, size, size);
   }
 
-  // Calculate image dimensions (contain mode - fit within bounds)
-  const imageWidth = image instanceof HTMLImageElement ? image.naturalWidth : image.width;
-  const imageHeight = image instanceof HTMLImageElement ? image.naturalHeight : image.height;
-  
-  const scale = Math.min(contentSize / imageWidth, contentSize / imageHeight);
-  const scaledWidth = imageWidth * scale;
-  const scaledHeight = imageHeight * scale;
-  
-  // Center the image
-  const x = paddingPixels + (contentSize - scaledWidth) / 2;
-  const y = paddingPixels + (contentSize - scaledHeight) / 2;
+  // Draw background (if not transparent)
+  const bg = (config as ImageModeConfig | CustomModeConfig).backgroundColor;
+  if (bg && bg !== 'transparent') {
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, size, size);
+  } else {
+    // Ensure transparent background
+    ctx.clearRect(0, 0, size, size);
+  }
 
-  // Draw the image
-  ctx.drawImage(image, x, y, scaledWidth, scaledHeight);
+  if (config.mode === 'image') {
+    if (!image) throw new Error('No source image provided');
+    const imageWidth = image instanceof HTMLImageElement ? image.naturalWidth : image.width;
+    const imageHeight = image instanceof HTMLImageElement ? image.naturalHeight : image.height;
 
+    // Determine crop rectangle (pixels)
+    const crop: ImageCrop = config.crop ?? (() => {
+      // Default: centered square crop
+      const side = Math.min(imageWidth, imageHeight);
+      const x = Math.max(0, (imageWidth - side) / 2);
+      const y = Math.max(0, (imageHeight - side) / 2);
+      return { x: x / imageWidth, y: y / imageHeight, width: side / imageWidth, height: side / imageHeight };
+    })();
+
+    let sx = Math.round(crop.x * imageWidth);
+    let sy = Math.round(crop.y * imageHeight);
+    let sw = Math.round(crop.width * imageWidth);
+    let sh = Math.round(crop.height * imageHeight);
+
+    // Clamp to image bounds to avoid empty draws
+    sx = Math.max(0, Math.min(sx, imageWidth - 1));
+    sy = Math.max(0, Math.min(sy, imageHeight - 1));
+    sw = Math.max(1, Math.min(sw, imageWidth - sx));
+    sh = Math.max(1, Math.min(sh, imageHeight - sy));
+
+    // Draw the cropped area to fill the canvas (cover)
+    ctx.drawImage(image, sx, sy, sw, sh, 0, 0, size, size);
+  } else {
+    // Custom mode: render text/emoji auto-fitted
+    const text = (config as CustomModeConfig).text ?? '';
+    if (text) {
+      const families = 'system-ui, -apple-system, Segoe UI, Roboto, "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // Determine max font size to fit within canvas with some padding
+      const maxBox = size * 0.85;
+      let fontSize = Math.floor(size); // start high
+      const minFont = 8;
+
+      const measure = (fs: number) => {
+        ctx.font = `${fs}px ${families}`;
+        const metrics = ctx.measureText(text);
+        const width = metrics.width;
+        // Approximate height using metrics; fallback to fs
+        const actualHeight = (metrics.actualBoundingBoxAscent ?? fs * 0.8) + (metrics.actualBoundingBoxDescent ?? fs * 0.2);
+        return { width, height: actualHeight };
+      };
+
+      // Binary search for best font size
+      let lo = minFont, hi = size * 1.5, best = minFont;
+      while (lo <= hi) {
+        const mid = Math.floor((lo + hi) / 2);
+        const { width, height } = measure(mid);
+        if (width <= maxBox && height <= maxBox) {
+          best = mid;
+          lo = mid + 1;
+        } else {
+          hi = mid - 1;
+        }
+      }
+
+      ctx.font = `${best}px ${families}`;
+      const fg = (config as CustomModeConfig).textColor || '#000000';
+      ctx.fillStyle = fg;
+      ctx.fillText(text, size / 2, size / 2);
+    }
+  }
+
+  // Restore after clip
   if (config.radiusPercent > 0) {
     ctx.restore();
   }
@@ -127,10 +194,10 @@ async function generateIcon(
  * Generate all favicon icons from source image
  */
 export async function generateIcons(
-  source: SourceImage,
+  source: SourceImage | null,
   config: GeneratorConfig
 ): Promise<GeneratedIcon[]> {
-  const image = await loadImage(source);
+  const image = config.mode === 'image' ? await loadImage(source as SourceImage) : null;
   const icons: GeneratedIcon[] = [];
 
   for (const size of FAVICON_SIZES) {

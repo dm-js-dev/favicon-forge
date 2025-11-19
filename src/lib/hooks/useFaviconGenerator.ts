@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
-import type { 
-  SourceImage, 
-  GeneratorConfig, 
-  GeneratorStatus, 
-  ErrorMessage 
+import type {
+  SourceImage,
+  GeneratorConfig,
+  GeneratorStatus,
+  ErrorMessage,
+  ImageModeConfig
 } from '../favicon/types';
 import { 
   generateIcons, 
@@ -14,10 +15,11 @@ import {
 } from '../favicon/generator';
 
 const DEFAULT_CONFIG: GeneratorConfig = {
-  paddingPercent: 10,
+  mode: 'image',
   radiusPercent: 0,
-  backgroundColor: '#ffffff'
-};
+  backgroundColor: '#ffffff',
+  crop: undefined
+} as ImageModeConfig;
 
 export function useFaviconGenerator() {
   const [sourceImage, setSourceImage] = useState<SourceImage | null>(null);
@@ -83,7 +85,7 @@ export function useFaviconGenerator() {
   }, [browserError, clearError]);
 
   const updateConfig = useCallback((updates: Partial<GeneratorConfig>) => {
-    setConfig((prev: GeneratorConfig) => ({ ...prev, ...updates }));
+    setConfig((prev: GeneratorConfig) => ({ ...(prev as any), ...(updates as any) }) as GeneratorConfig);
   }, []);
 
   const generateZip = useCallback(async (): Promise<void> => {
