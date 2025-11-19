@@ -229,7 +229,14 @@ export default function FaviconTool() {
             }
             ctx.font = `${best}px ${families}`;
             ctx.fillStyle = (config as any).textColor || '#000000';
-            ctx.fillText(text, view / 2, view / 2);
+            const metrics = ctx.measureText(text);
+            const ascent = metrics.actualBoundingBoxAscent ?? best * 0.8;
+            const descent = metrics.actualBoundingBoxDescent ?? best * 0.2;
+            const total = ascent + descent;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const y = view / 2 + (ascent - total / 2);
+            ctx.fillText(text, view / 2, y);
           }
           undo();
           map[size] = canvas.toDataURL('image/png');

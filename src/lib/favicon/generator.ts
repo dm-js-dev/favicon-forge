@@ -163,7 +163,15 @@ async function generateIcon(
       ctx.font = `${best}px ${families}`;
       const fg = (config as CustomModeConfig).textColor || '#000000';
       ctx.fillStyle = fg;
-      ctx.fillText(text, size / 2, size / 2);
+      const metrics = ctx.measureText(text);
+      const ascent = metrics.actualBoundingBoxAscent ?? best * 0.8;
+      const descent = metrics.actualBoundingBoxDescent ?? best * 0.2;
+      const total = ascent + descent;
+      // Use middle baseline and adjust Y so bounding box centers.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const y = size / 2 + (ascent - total / 2);
+      ctx.fillText(text, size / 2, y);
     }
   }
 
